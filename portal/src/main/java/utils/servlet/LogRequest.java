@@ -1,6 +1,8 @@
-package servlet;
+package utils.servlet;
 
-import controller.HelloWorld;
+import controller.LoginCheck;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,6 +17,7 @@ import java.io.PrintWriter;
 public class LogRequest extends HttpServlet {
     private static final long serialVersionUID = 369840050351775312L;
 
+    private static final Logger logger = LoggerFactory.getLogger(LogRequest.class);
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -22,21 +25,19 @@ public class LogRequest extends HttpServlet {
         String username = request.getParameter("username");
         username = new String(username.getBytes("ISO-8859-1"), "UTF-8");
         String password = request.getParameter("password");
-        System.out.println(username + "--" + password);
+        logger.info("用户名：{}，密码：{}", username,password);
 
-        // 新建服务对象
-        HelloWorld helloWorld = new HelloWorld();
-        helloWorld.testMain();
-
+        // 后台处理
+        LoginCheck loginCheck= new LoginCheck();
+        String res = loginCheck.logCheck(username,password);
+        logger.info("登录结果：{}",res);
         // 返回信息到客户端
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
-        out.print("用户名：" + username);
-        out.print("密码：" + password);
+        out.print(res);
         out.flush();
         out.close();
-
     }
 
 
