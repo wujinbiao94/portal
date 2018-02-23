@@ -4,12 +4,13 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
     <servlet>
-        <servlet-name>HelloWorld</servlet-name>
-        <servlet-class>servlet.LogRequest</servlet-class>
+        <servlet-name>Login</servlet-name>
+        <servlet-class>utils.servlet.LogRequest</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>HelloWorld</servlet-name>
-        <url-pattern>/helloworld</url-pattern>
+        <servlet-name>Login</servlet-name>
+        <url-pattern>/login</url-pattern>
     </servlet-mapping>
+
 </web-app>
