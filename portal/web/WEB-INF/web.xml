@@ -3,6 +3,8 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
+
+    <!--登陆用户-->
     <servlet>
         <servlet-name>Login</servlet-name>
         <servlet-class>utils.servlet.LogRequest</servlet-class>
@@ -13,4 +15,14 @@
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
 
+    <!--上传汽车拍照-->
+    <servlet>
+        <servlet-name>upLoadFile</servlet-name>
+        <servlet-class>utils.servlet.UpLoadCarPicture</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>upLoadFile</servlet-name>
+        <url-pattern>/upLoadFile</url-pattern>
+    </servlet-mapping>
 </web-app>
