@@ -1,0 +1,17 @@
+package utils.Enum;
+
+/**
+ * Created by 你敬爱的彪哥 on 2018/4/17.
+ */
+public class Constants {
+
+    /**
+     * 车牌查询请求参数
+     */
+    public static final String plateNumberParams = "plateNumber";
+
+    /**
+     * 请求类型参数
+     */
+    public static final String requestType = "requestType";
+}
