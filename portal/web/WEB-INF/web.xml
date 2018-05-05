@@ -25,4 +25,15 @@
         <servlet-name>upLoadFile</servlet-name>
         <url-pattern>/upLoadFile</url-pattern>
     </servlet-mapping>
+
+    <!--查询servlet-->
+    <servlet>
+        <servlet-name>query</servlet-name>
+        <servlet-class>utils.servlet.queryServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>query</servlet-name>
+        <url-pattern>*.do</url-pattern>
+    </servlet-mapping>
 </web-app>
