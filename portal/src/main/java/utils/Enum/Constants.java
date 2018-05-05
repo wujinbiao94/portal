@@ -14,4 +14,9 @@ public class Constants {
      * 请求类型参数
      */
     public static final String requestType = "requestType";
+
+    /**
+     * 通过车牌号查询车辆信息
+     */
+    public static final String requestCarInfo = "carRequest";
 }

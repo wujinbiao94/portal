@@ -1,10 +1,13 @@
 package utils.servlet;
 
 import controller.PlateNumQueryController;
+import dao.QueryCarDao;
+import dao.impl.QueryCarDaoImpl;
 import org.apache.commons.collections.map.HashedMap;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import service.impl.QueryFactory;
 import utils.Enum.Constants;
 import utils.Enum.RequestTypeEnum;
 
@@ -66,5 +69,48 @@ public class queryServlet extends HttpServlet {
             res.put(Constants.plateNumberParams, new String(request.getParameter(Constants.plateNumberParams).getBytes("ISO-8859-1"), "UTF-8"));
         }
         return res;
+    }
+
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        System.out.println("post请求！");
+        //路径前面带有/add.do
+        String urlPath=request.getServletPath();
+        System.out.println("请求的路径为："+ urlPath);
+        //去除路径的 /
+        String methodName = urlPath.substring(1);
+        //去掉 .do
+        methodName = methodName.substring(0, methodName.length() - 3);
+        System.out.println("请求的方法为：" + methodName);
+
+        //QueryFactory queryFactory = new QueryFactory(methodName);
+        //查询车辆信息
+        String res = "";
+        //TODO 更改成工厂模式
+
+        if (Constants.requestCarInfo.equals(methodName)){
+            QueryCarDao queryCarDao = new QueryCarDaoImpl();
+            if (request.getParameter("carID") != null) {
+                Map<String,Object> map = queryCarDao.queryCarInfoById(request.getParameter("carID"));
+                res = JSONObject.valueToString(map);
+            } else {
+                System.out.println("传参为空！");
+                return;
+            }
+        }
+
+        try {
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("text/html");
+            PrintWriter responseWriter = response.getWriter();
+            responseWriter.print(res);
+            responseWriter.flush();
+            responseWriter.close();
+        } catch (Exception e){
+            System.out.println("返回请求失败！");
+            e.printStackTrace();
+        }
+
+
     }
 }

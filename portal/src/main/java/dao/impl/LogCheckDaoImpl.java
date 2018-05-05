@@ -14,7 +14,7 @@ import java.sql.ResultSet;
  */
 public class LogCheckDaoImpl implements LogCheckDao{
     private static final Logger logger = LoggerFactory.getLogger(LogCheckDaoImpl.class);
-    static SqlServicePool SQLServer = new SqlServicePool();
+    public static SqlServicePool SQLServer = new SqlServicePool();
     static int passwordIndex = 3;
 
     public String queryPasswordByUserName(String userName) {
