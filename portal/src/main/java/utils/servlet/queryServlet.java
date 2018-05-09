@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import service.impl.QueryFactory;
 import utils.Enum.Constants;
 import utils.Enum.RequestTypeEnum;
+import utils.util.DataFormat;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -87,18 +88,23 @@ public class queryServlet extends HttpServlet {
         //查询车辆信息
         String res = "";
         //TODO 更改成工厂模式
-
-        if (Constants.requestCarInfo.equals(methodName)){
-            QueryCarDao queryCarDao = new QueryCarDaoImpl();
-            if (request.getParameter("carID") != null) {
-                Map<String,Object> map = queryCarDao.queryCarInfoById(request.getParameter("carID"));
-                res = JSONObject.valueToString(map);
-            } else {
-                System.out.println("传参为空！");
-                return;
+        try {
+            if (Constants.requestCarInfo.equals(methodName)) {
+                QueryCarDao queryCarDao = new QueryCarDaoImpl();
+                String carNum = DataFormat.requestParam2String(request.getParameter("carNum"));
+                System.out.println("查询参数="+carNum);
+                if (!"".equals(carNum)) {
+                    Map<String, Object> map = queryCarDao.queryCarInfoById(carNum);
+                    res = JSONObject.valueToString(map);
+                    System.out.println("查询到的信息=" + res);
+                } else {
+                    System.out.println("传参为空！");
+                    return;
+                }
             }
+        } catch (Exception e){
+            e.printStackTrace();
         }
-
         try {
             response.setCharacterEncoding("UTF-8");
             response.setContentType("text/html");
