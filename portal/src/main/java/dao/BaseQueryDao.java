@@ -25,8 +25,9 @@ public class BaseQueryDao {
      */
     public Map<String,Object> queryBy(LinkedHashMap<String, Object> params, String sql){
         Map<String,Object> res = new HashedMap();
+        Connection conn = null;
         try{
-            Connection conn = LogCheckDaoImpl.SQLServer.getConnection();
+            conn = LogCheckDaoImpl.SQLServer.getConnection();
             PreparedStatement pst = conn.prepareStatement(sql);
             int j = 1;
             for (String key:params.keySet()) {
@@ -44,6 +45,10 @@ public class BaseQueryDao {
             LogCheckDaoImpl.SQLServer.close(conn);
         }catch(Exception e) {
             e.printStackTrace();
+        } finally {
+            if (conn != null){
+                LogCheckDaoImpl.SQLServer.close(conn);
+            }
         }
         return res;
     }

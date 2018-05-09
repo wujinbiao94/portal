@@ -24,4 +24,16 @@ public class QueryCarDaoImpl extends BaseQueryDao implements QueryCarDao {
         param.put("plateNum", carID);
         return queryBy(param,sql);
     }
+
+    /**
+     * 驾驶证编号
+     * @param driverLisence
+     * @return
+     */
+    public Map<String, Object> queryByDriverLisence(String driverLisence) {
+        String sql = "SELECT d.driver_name,d.age,d.phone,d.sex,d.ID_num,r.region_name,GROUP_CONCAT(CONCAT(p.peccancy_place,p.peccancy_type),',') peccancyInfo FROM driver d, region_info r,peccancy_info p WHERE r.id = d.region_id AND p.driver_id = d.id AND p.is_deal = 0 and d.ID_num = ?";
+        LinkedHashMap<String,Object> param = new LinkedHashMap();
+        param.put("driverLisence", driverLisence);
+        return queryBy(param,sql);
+    }
 }

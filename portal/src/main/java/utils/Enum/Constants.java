@@ -19,4 +19,9 @@ public class Constants {
      * 通过车牌号查询车辆信息
      */
     public static final String requestCarInfo = "carRequest";
+
+    /**
+     * 车牌号查询方法
+     */
+    public static final String requestByDriverLicence = "driverLisence";
 }

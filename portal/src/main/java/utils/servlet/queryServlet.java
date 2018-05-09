@@ -89,8 +89,8 @@ public class queryServlet extends HttpServlet {
         String res = "";
         //TODO 更改成工厂模式
         try {
+            QueryCarDao queryCarDao = new QueryCarDaoImpl();
             if (Constants.requestCarInfo.equals(methodName)) {
-                QueryCarDao queryCarDao = new QueryCarDaoImpl();
                 String carNum = DataFormat.requestParam2String(request.getParameter("carNum"));
                 System.out.println("查询参数="+carNum);
                 if (!"".equals(carNum)) {
@@ -101,6 +101,12 @@ public class queryServlet extends HttpServlet {
                     System.out.println("传参为空！");
                     return;
                 }
+            } else if (Constants.requestByDriverLicence.equals(methodName)){
+                String driverLisence = DataFormat.requestParam2String(request.getParameter("driverLisence"));
+                System.out.println("查询参数="+driverLisence);
+
+                Map<String, Object> map = queryCarDao.queryByDriverLisence(driverLisence);
+                res = JSONObject.valueToString(map);
             }
         } catch (Exception e){
             e.printStackTrace();

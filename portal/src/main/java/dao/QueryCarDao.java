@@ -7,5 +7,17 @@ import java.util.Map;
  */
 public interface QueryCarDao {
 
+    /**
+     * 车牌号查询
+     * @param carID 车牌号
+     * @return
+     */
     Map<String, Object> queryCarInfoById(String carID);
+
+    /**
+     * 驾驶证编号
+     * @param driverLisence
+     * @return
+     */
+    Map<String,Object> queryByDriverLisence(String driverLisence);
 }
