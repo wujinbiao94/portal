@@ -24,4 +24,9 @@ public class Constants {
      * 车牌号查询方法
      */
     public static final String requestByDriverLicence = "driverLisence";
+
+    /**
+     * 插入
+     */
+    public static final String requestByinsert = "peccancyInsert";
 }

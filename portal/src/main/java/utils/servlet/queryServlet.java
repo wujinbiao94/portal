@@ -1,7 +1,9 @@
 package utils.servlet;
 
 import controller.PlateNumQueryController;
+import dao.PeccancyDao;
 import dao.QueryCarDao;
+import dao.impl.PeccancyDaoImpl;
 import dao.impl.QueryCarDaoImpl;
 import org.apache.commons.collections.map.HashedMap;
 import org.json.JSONObject;
@@ -11,6 +13,7 @@ import service.impl.QueryFactory;
 import utils.Enum.Constants;
 import utils.Enum.RequestTypeEnum;
 import utils.util.DataFormat;
+import utils.util.DateFormat;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,6 +21,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -107,6 +112,27 @@ public class queryServlet extends HttpServlet {
 
                 Map<String, Object> map = queryCarDao.queryByDriverLisence(driverLisence);
                 res = JSONObject.valueToString(map);
+            } else if (Constants.requestByinsert.equals(methodName)){
+                String peccancy_place = DataFormat.requestParam2String(request.getParameter("peccancyPlace"));
+                String peccancy_date = DataFormat.requestParam2String(request.getParameter("peccancyDate"));
+                String ID_num = DataFormat.requestParam2String(request.getParameter("license"));
+                String peccancy_type = DataFormat.requestParam2String(request.getParameter("peccancyType"));
+                String dealPersion = DataFormat.requestParam2String(request.getParameter("dealPersion"));
+                String carPlateNum = DataFormat.requestParam2String(request.getParameter("carPlateNum"));
+                LinkedHashMap<String,Object> data = new LinkedHashMap();
+                if (peccancy_date.equals("")){
+                    peccancy_date = DateFormat.date2Str(new Date(),null);
+                }
+                data.put("peccancy_place",peccancy_place);
+                data.put("peccancy_date",peccancy_date);
+                data.put("ID_num",ID_num);
+                data.put("peccancy_type",peccancy_type);
+                data.put("dealPersion",dealPersion);
+                data.put("carPlateNum",carPlateNum);
+                System.out.println("查询参数="+JSONObject.valueToString(data));
+                PeccancyDao peccancyDao = new PeccancyDaoImpl();
+                int i = peccancyDao.insertPeccancyInfo(data);
+                res = JSONObject.valueToString(i);
             }
         } catch (Exception e){
             e.printStackTrace();

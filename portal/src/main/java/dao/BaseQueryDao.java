@@ -2,11 +2,9 @@ package dao;
 
 import dao.impl.LogCheckDaoImpl;
 import org.apache.commons.collections.map.HashedMap;
+import utils.jdbc.SqlServicePool;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
+import java.sql.*;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +15,7 @@ import java.util.Map;
  */
 public class BaseQueryDao {
 
+    public static SqlServicePool SQLServer = new SqlServicePool();
     /**
      * 查询sql
      * @param params 参数
@@ -27,7 +26,7 @@ public class BaseQueryDao {
         Map<String,Object> res = new HashedMap();
         Connection conn = null;
         try{
-            conn = LogCheckDaoImpl.SQLServer.getConnection();
+            conn = SQLServer.getConnection();
             PreparedStatement pst = conn.prepareStatement(sql);
             int j = 1;
             for (String key:params.keySet()) {
@@ -42,14 +41,43 @@ public class BaseQueryDao {
                 }
             }
             pst.close();
-            LogCheckDaoImpl.SQLServer.close(conn);
+            SQLServer.close(conn);
         }catch(Exception e) {
             e.printStackTrace();
         } finally {
             if (conn != null){
-                LogCheckDaoImpl.SQLServer.close(conn);
+                SQLServer.close(conn);
             }
         }
         return res;
+    }
+
+    /**
+     * 插入执行
+     * @param sql
+     * @param params
+     * @return
+     */
+    public static int insert(String sql,LinkedHashMap<String, Object> params) {
+        Connection conn = SQLServer.getConnection();
+        int i = 0;
+        PreparedStatement pstmt;
+        try {
+            pstmt = (PreparedStatement) conn.prepareStatement(sql);
+            int j = 1;
+            for (String key:params.keySet()) {
+                pstmt.setString(j++,params.get(key).toString());
+            }
+            i = pstmt.executeUpdate();
+            pstmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            if (conn != null){
+                SQLServer.close(conn);
+            }
+        }
+        return i;
     }
 }
