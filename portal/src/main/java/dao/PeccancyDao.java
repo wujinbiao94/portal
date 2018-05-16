@@ -1,5 +1,6 @@
 package dao;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -11,4 +12,11 @@ public interface PeccancyDao {
      * @param data 插入信息
      */
     int insertPeccancyInfo(Map<String, Object> data);
+
+    /**
+     * 查询违章信息
+     * @param paramData
+     * @return
+     */
+    List<Map<String,Object>> queryPeccancy(String paramData);
 }

@@ -29,4 +29,9 @@ public class Constants {
      * 插入
      */
     public static final String requestByinsert = "peccancyInsert";
+
+    /**
+     * 违章查询
+     */
+    public static final String requestByPeccancy = "peccancySearch";
 }

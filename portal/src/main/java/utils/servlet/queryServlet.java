@@ -9,6 +9,8 @@ import org.apache.commons.collections.map.HashedMap;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import service.PeccancyService;
+import service.impl.PeccancyServiceImpl;
 import service.impl.QueryFactory;
 import utils.Enum.Constants;
 import utils.Enum.RequestTypeEnum;
@@ -23,6 +25,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -133,6 +136,11 @@ public class queryServlet extends HttpServlet {
                 PeccancyDao peccancyDao = new PeccancyDaoImpl();
                 int i = peccancyDao.insertPeccancyInfo(data);
                 res = JSONObject.valueToString(i);
+            } else if (Constants.requestByPeccancy.equals(methodName)){
+                PeccancyService peccancyService = new PeccancyServiceImpl();
+                String param = DataFormat.requestParam2String(request.getParameter("searchParam"));
+                List<String> strings = peccancyService.peccancySearch(param);
+                res = JSONObject.valueToString(strings);
             }
         } catch (Exception e){
             e.printStackTrace();

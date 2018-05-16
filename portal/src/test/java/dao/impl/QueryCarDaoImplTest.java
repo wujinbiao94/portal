@@ -15,7 +15,7 @@ public class QueryCarDaoImplTest {
     private QueryCarDao queryCarDao = new QueryCarDaoImpl();
     @Test
     public void queryCarInfoById() throws Exception {
-        Map<String, Object> res = queryCarDao.queryCarInfoById("津8888");
+        Map<String, Object> res = queryCarDao.queryByDriverLisence("120224200202022234");
         System.out.println(JSONObject.valueToString(res));
         /* for (String key:res.keySet()) {
             System.out.println(key+" = " + res.get(key));
